@@ -29,7 +29,7 @@ object GeminiService {
     suspend fun generateContent(prompt: String, systemInstruction: String? = null): Result<String> = withContext(Dispatchers.IO) {
         val apiKey = BuildConfig.GEMINI_API_KEY
         if (apiKey.isEmpty() || apiKey == "MY_GEMINI_API_KEY") {
-            Log.w(TAG, "API key is empty or default. Mocking response.")
+            Log.w(TAG, "API key is empty or default. Returning failure.")
             return@withContext Result.failure(Exception("Gemini API Key is not configured in Secrets panel."))
         }
 

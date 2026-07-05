@@ -1014,8 +1014,10 @@ fun FinOpsDashboardScreen(
                                     Toast.makeText(context, "Executing automated scale policy via Lambda...", Toast.LENGTH_SHORT).show()
                                     delay(1500)
                                     // Remove idle resources, decrease cost
+                                    val unusedVolume = resources.find { it.name == "unused-temp-ebs-volume" }
+                                    val costReduction = unusedVolume?.monthlyCost ?: 60.00
                                     resources = resources.filterNot { it.name == "unused-temp-ebs-volume" }
-                                    onCostUpdated(1430.00 - 60.00)
+                                    onCostUpdated(totalMonthlyCost - costReduction)
                                     aiSavingsPlan = null
                                     Toast.makeText(context, "Cloud Optimization Applied! Saved $60/mo immediately.", Toast.LENGTH_LONG).show()
                                 }
