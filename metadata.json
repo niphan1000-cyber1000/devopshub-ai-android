@@ -1,0 +1,6 @@
+{
+  "name": "DevOpsHub AI",
+  "description": "An AI-powered DevOps Assistant and Dashboard that integrates and automates the 6 core pillars of DevOps.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
