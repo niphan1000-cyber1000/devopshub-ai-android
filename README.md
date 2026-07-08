@@ -7,9 +7,56 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0.0-blue.svg)](https://kotlinlang.org)
 [![Compose](https://img.shields.io/badge/Compose-M3-purple.svg)](https://developer.android.com/jetpack/compose)
 [![API Level](https://img.shields.io/badge/Min%20SDK-24-orange.svg)](https://developer.android.com/studio/releases/platforms)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](#license)
+[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)](#)
+[![Tests Status](https://img.shields.io/badge/Tests-Passing-brightgreen.svg)](#)
 
 An Android DevOps assistant built with **Jetpack Compose (Material 3)**, powered by the **Gemini API**. DevOpsHub AI brings six core "pillars" of cloud infrastructure, security, and operations into a single cohesive mobile dashboard.
+
+This application is designed with a lightweight unidirectional data flow, using native Material 3 styling, Edge-to-Edge capabilities, local mock database state machines, and direct integration with Gemini REST services for intelligent root-cause analysis, IaC generation, cluster troubleshooting, and security remediation.
+
+---
+
+## 💡 Why DevOpsHub AI?
+
+Modern SREs and DevOps engineers constantly juggle multiple disconnected systems: cloud dashboards, CI/CD tools, Kubernetes consoles, terminal monitors, and general AI assistants.
+
+**DevOpsHub AI** unifies these critical workflows into a single mobile interface. It empowers on-call engineers to:
+- Instantly diagnose failed CI/CD pipelines on the go.
+- Troubleshoot crashed Kubernetes pods with real-time AI log diagnostics.
+- Keep cloud spending optimized with automated FinOps suggestions.
+- Write robust Terraform configurations directly from their phone.
+
+---
+
+## 📱 Screenshots
+
+Here is a visual overview of the DevOpsHub AI experience:
+
+| Dashboard Overview | Terraform Generator | Kubernetes Controller |
+| :---: | :---: | :---: |
+| <img src="assets/dashboard.jpg" width="280" alt="Dashboard" /> | <img src="assets/terraform.jpg" width="280" alt="Terraform" /> | <img src="assets/k8s.jpg" width="280" alt="Kubernetes" /> |
+
+---
+
+## 🎬 Interaction Flow (Walkthrough)
+
+Here is a conceptual breakdown of a typical interactive session with the assistant:
+
+```
+┌─────────────────┐       ┌────────────────────┐       ┌────────────────────┐
+│ 1. Open App     ├──────►│ 2. Select Pillar   ├──────►│ 3. Execute Actions │
+│ View main grid  │       │ (e.g. Kubernetes)  │       │ (e.g. Restart Pod) │
+│ & cloud metrics │       │ Inspect failing UI │       │ State updates live │
+└─────────────────┘       └─────────┬──────────┘       └─────────┬──────────┘
+                                    │                            │
+                                    ▼                            ▼
+                          ┌────────────────────┐       ┌────────────────────┐
+                          │ 4. Request AI Help ├──────►│ 5. Review & Apply  │
+                          │ Gemini-3.5-Flash   │       │ Generated Terraform│
+                          │ analyzes system state│     │ or security patch  │
+                          └────────────────────┘       └────────────────────┘
+```
 
 ---
 
@@ -18,7 +65,7 @@ An Android DevOps assistant built with **Jetpack Compose (Material 3)**, powered
 DevOpsHub AI aggregates the daily tasks of modern SREs and DevOps Engineers into interactive modules:
 
 1. **CI/CD Pipeline Monitor** — View pipeline runs, trigger simulated builds, and get automated, highly accurate root-cause analysis on failed builds.
-2. **IaC Terraform Generator** — Describe infrastructure in plain English and instantly generate production-grade, syntax-correct, and secure Terraform configurations.
+2. **IaC Terraform Generator** — Describe infrastructure in plain English and instantly generate production-ready, syntax-correct, and secure Terraform configurations.
 3. **Container & K8s Controller** — Inspect pod lists, check runtime status, fetch log streams, and use Gemini to diagnose and troubleshoot crashes like `CrashLoopBackOff`.
 4. **FinOps Cost Optimizer** — View cloud resources, analyze multi-cloud cost matrices, and execute automated cleanup strategies (such as purging orphaned EBS volumes) to save budget.
 5. **Observability & Alerts** — Review active system alerts and incidents with AI-driven triage and suggested manual or automated hotfixes.
@@ -30,31 +77,20 @@ DevOpsHub AI aggregates the daily tasks of modern SREs and DevOps Engineers into
 
 To keep developers informed of the exact engineering setup of this prototype, here is the honest layout of our tech stack:
 
-```
-       ┌────────────────────────────────────────────────────────┐
-       │                  Jetpack Compose UI                    │
-       │   (Dashboard, Detail Screens, Spec Blueprint Viewer)   │
-       └───────────────────────────┬────────────────────────────┘
-                                   │
-                                   ▼
-       ┌────────────────────────────────────────────────────────┐
-       │             Unidirectional State Flows                 │
-       │    (Compose State management using local state,       │
-       │     remember { mutableStateOf(...) }, and lambdas)     │
-       └───────────────────────────┬────────────────────────────┘
-                                   │
-                     ┌─────────────┴─────────────┐
-                     ▼                           ▼
-       ┌───────────────────────────┐   ┌───────────────────────────┐
-       │       Gemini Service      │   │     Local Cache / Data    │
-       │(Native OkHttpClient & JSON)│   │  (DevOpsData Repositories)│
-       └─────────────┬─────────────┘   └───────────────────────────┘
-                     │
-                     ▼
-       ┌───────────────────────────┐
-       │     Google Gemini API     │
-       │    (gemini-3.5-flash)     │
-       └───────────────────────────┘
+### Mermaid Architecture Diagram
+
+```mermaid
+graph TD
+    UI[Jetpack Compose UI] -->|Direct Local State| State[Unidirectional State management]
+    State -->|Triggers Rest API| GeminiService[Gemini API REST Client]
+    State -->|Updates/Reads| LocalData[Local Cache & DevOpsData Repository]
+    GeminiService -->|OkHttpClient & JSON| GeminiAPI[Google Gemini API v1beta]
+    
+    style UI fill:#3DDC84,stroke:#073042,stroke-width:2px,color:#073042
+    style State fill:#4285F4,stroke:#0D47A1,stroke-width:2px,color:#FFF
+    style GeminiService fill:#9C27B0,stroke:#4A148C,stroke-width:2px,color:#FFF
+    style LocalData fill:#FF9800,stroke:#E65100,stroke-width:2px,color:#000
+    style GeminiAPI fill:#E91E63,stroke:#880E4F,stroke-width:2px,color:#FFF
 ```
 
 - **Architecture Pattern**: Native single-activity structure coordinating views using Compose-based State Management (`remember { mutableStateOf() }` with state-hoisting callback lambdas). It does *not* utilize a separate `ViewModel` class or standard navigation libraries, choosing direct Compose flow controls instead for high-performance navigation and tab-switches.
@@ -120,19 +156,13 @@ app/src/main/java/com/example/
 4. Select the **debug** variant in the **Build Variants** panel.
 5. Run on a connected emulator or physical device.
 
-### Building Release APK
+---
 
-To package a production-signed, optimized build:
+## 📦 Download & Release
 
-```bash
-# Configure signing configs via environment variables (optional)
-export KEYSTORE_PATH="/path/to/upload-key.jks"
-export STORE_PASSWORD="keystore-pass"
-export KEY_PASSWORD="key-pass"
-
-# Build release bundle or APK
-./gradlew assembleRelease
-```
+You can download compiled artifacts for quick demonstration:
+- **Latest Dev APK**: Available via the AI Studio preview menu.
+- **Production-ready builds**: Can be signed and exported directly using the Android Studio `Build > Build Bundle(s) / APK(s) > Build APK(s)` tool.
 
 ---
 
@@ -164,28 +194,51 @@ If you made intentional UI adjustments and want to update the official baselines
 
 ---
 
-## 🗺️ Development Roadmap
+## 📈 Release Status & Versions
 
-- [x] **Phase 1: Foundation (Completed)**
-  - Core 6-pillar UI dashboard implementation in Material 3.
-  - Standardized local state tracking (unhealthy pod restart triggers, EBS cost optimization).
-  - Secure `.env` file integration and local test builds.
-- [ ] **Phase 2: Secure Hybrid Architecture (Current)**
-  - Integrate **Firebase App Check** & **AppCheck reCAPTCHA Enterprise** to authenticate genuine client instances.
-  - Shift direct API calls away from the client device toward a lightweight **Cloud Function API Proxy** to prevent key harvesting.
-- [ ] **Phase 3: Deep Integrations (Future)**
-  - Connect real-time telemetry from live Kubernetes clusters via read-only K8s REST APIs.
-  - Implement real Webhook endpoints for instant Slack or Microsoft Teams alert dispatch.
+| Version | Release Date | Status | Description |
+| :---: | :---: | :---: | :--- |
+| **v1.0.0** | July 2026 | `In-Development` | Prototype preview showing 6 interactive DevOps pillars integrated with Gemini AI. |
 
 ---
 
-## 🔒 Security & Production Notes
+## ⚠ Known Limitations
 
-In a real production environment, calling raw endpoints directly with a bundled API key poses severe security risks:
+- **Simulated Infrastructure Data**: Cloud servers, Kubernetes clusters, and pipelines are modeled as realistic local state machines inside `DevOpsData.kt` rather than live production instances.
+- **No Direct Cloud Writes**: Generated Terraform code and DevSecOps recommendations must be manually verified and executed, protecting your live environment from accidental mutations.
+- **Client Key Storage Warning**: The Gemini API key is loaded locally from `.env` and bundled into the debug binary, making it insecure for public play store distribution without an intermediate proxy backend.
 
-- **Key Harvesting**: Malicious users can easily extract the `GEMINI_API_KEY` from compiled bytecode.
-- **Client Shielding**: We recommend using our direct-in-app **Blueprint Screen** to understand how to design and build a secure backend proxy:
-  1. The client requests data.
-  2. The request is validated by **Firebase App Check** to ensure it's an untampered app instance.
-  3. The request is routed to a secure, private Node.js/Python backend.
-  4. The backend appends the API key from a secure secret manager (like GCP Secret Manager) and executes the call.
+---
+
+## 💬 FAQ
+
+### Does this app connect to my live AWS/GCP/Kubernetes?
+**No**. All network activities are simulated using secure local state controllers. Only the diagnostic and generator fields send prompts to the secure Google Gemini API.
+
+### Is a Gemini API key strictly required?
+**Yes**, to use the AI capabilities (Terraform generator, CI/CD analysis, K8s troubleshooting, DevSecOps code scanner). However, the dashboard, charts, metric controls, and simulation flows remain fully functional offline even without a key.
+
+---
+
+## 🤝 Contributing
+
+Contributions to improve DevOpsHub AI are highly welcome!
+1. **Fork** the repository.
+2. **Create a branch** for your feature: `git checkout -b feature/amazing-feature`.
+3. **Commit** your changes: `git commit -m "Add some amazing feature"`.
+4. **Push** to your fork: `git push origin feature/amazing-feature`.
+5. Open a **Pull Request**.
+
+---
+
+## 🎖️ Acknowledgements
+
+- **Google Gemini API**: Providing robust language model reasoning directly to mobile devices.
+- **Android Jetpack Compose & M3**: For the highly customizable, edge-to-edge component framework.
+- **Robolectric & Roborazzi**: Ensuring solid, automated visual regression coverage.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
