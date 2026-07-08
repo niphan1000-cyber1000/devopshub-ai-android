@@ -8,12 +8,32 @@
 [![Compose](https://img.shields.io/badge/Compose-M3-purple.svg)](https://developer.android.com/jetpack/compose)
 [![API Level](https://img.shields.io/badge/Min%20SDK-24-orange.svg)](https://developer.android.com/studio/releases/platforms)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](#-license)
-[![Build Status](https://github.com/yourusername/devopshub-ai-android/actions/workflows/build.yml/badge.svg)](https://github.com/yourusername/devopshub-ai-android/actions)
 [![Tests Status](https://img.shields.io/badge/Tests-Passing-brightgreen.svg)](#-testing-suite)
 
 An Android DevOps assistant built with **Jetpack Compose (Material 3)**, powered by the **Gemini API**. DevOpsHub AI brings six core "pillars" of cloud infrastructure, security, and operations into a single cohesive mobile dashboard.
 
 This application is designed with a lightweight unidirectional data flow, using native Material 3 styling, Edge-to-Edge capabilities, local mock database state machines, and direct integration with Gemini REST services for intelligent root-cause analysis, IaC generation, cluster troubleshooting, and security remediation.
+
+---
+
+## 📌 Table of Contents
+
+- [💡 Why DevOpsHub AI?](#-why-devopshub-ai)
+- [📥 Download](#-download)
+- [📱 Screenshots](#-screenshots)
+- [🎬 Interaction Flow (Walkthrough)](#-interaction-flow-walkthrough)
+- [🚀 Key Features (The 6 Pillars)](#-key-features-the-6-pillars)
+- [🛠️ Tech Stack & Real Architecture](#️-tech-stack--real-architecture)
+- [🔑 Setup & API Key Configuration](#-setup--api-key-configuration)
+- [📦 Project Structure](#-project-structure)
+- [⚙️ Build & Run Locally](#️-build--run-locally)
+- [🧪 Testing Suite](#-testing-suite)
+- [📜 Changelog](#-changelog)
+- [⚠ Known Limitations](#-known-limitations)
+- [❓ FAQ](#-faq)
+- [🤝 Contributing](#-contributing)
+- [🙏 Acknowledgements](#-acknowledgements)
+- [📄 License](#-license)
 
 ---
 
@@ -32,9 +52,8 @@ Modern SREs and DevOps engineers constantly juggle multiple disconnected systems
 ## 📥 Download
 
 You can obtain the application package via either of these options:
-- **GitHub Releases**: Download the latest pre-compiled debug/release APK from the **[Releases](https://github.com/yourusername/devopshub-ai/releases)** section of this repository.
 - **AI Studio Preview**: Test and stream the applet directly inside the Google AI Studio emulator browser dashboard.
-- **Local Compiling**: Build the APK directly from source in under 2 minutes (see the [Build Instructions](#-build--run-locally) below).
+- **Local Compiling**: Build the APK directly from source in under 2 minutes (see the [Build Instructions](#️-build--run-locally) below).
 
 ---
 
