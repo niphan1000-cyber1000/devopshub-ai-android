@@ -12,13 +12,22 @@
 
 An Android DevOps assistant built with **Jetpack Compose (Material 3)**, powered by the **Gemini API**. DevOpsHub AI brings six core "pillars" of cloud infrastructure, security, and operations into a single cohesive mobile dashboard.
 
-This application is designed with a lightweight unidirectional data flow, using native Material 3 styling, Edge-to-Edge capabilities, local mock database state machines, and direct integration with Gemini REST services for intelligent root-cause analysis, IaC generation, cluster troubleshooting, and security remediation.
+This application is designed with a lightweight unidirectional data flow, using native Material 3 styling, Edge-to-Edge capabilities, local mock database state machines, and direct integration with Gemini REST services for intelligent root-cause analysis suggestions, IaC draft generation, simulated cluster troubleshooting, and security remediation recommendations.
+
+---
+
+## 📈 Project Status
+
+**Current Status**: `Active Development / Prototype`
+
+This project is currently under active development. All Cloud infrastructure, CI/CD pipelines, container clusters, and metric parameters are simulated using robust, interactive local state controllers to showcase client application workflows. It is intended as a high-fidelity design prototype, experimental playground, and educational blueprint, rather than a live production integration.
 
 ---
 
 ## 📌 Table of Contents
 
 - [💡 Why DevOpsHub AI?](#-why-devopshub-ai)
+- [📈 Project Status](#-project-status)
 - [📥 Download](#-download)
 - [📱 Screenshots](#-screenshots)
 - [🎬 Interaction Flow (Walkthrough)](#-interaction-flow-walkthrough)
@@ -42,10 +51,10 @@ This application is designed with a lightweight unidirectional data flow, using 
 Modern SREs and DevOps engineers constantly juggle multiple disconnected systems: cloud dashboards, CI/CD tools, Kubernetes consoles, terminal monitors, and general AI assistants.
 
 **DevOpsHub AI** unifies these critical workflows into a single mobile interface. It empowers on-call engineers to:
-- Instantly diagnose failed CI/CD pipelines on the go.
-- Troubleshoot crashed Kubernetes pods with real-time AI log diagnostics.
-- Keep cloud spending optimized with automated FinOps suggestions.
-- Write robust Terraform configurations directly from their phone.
+- Instantly diagnose simulated failed CI/CD pipelines on the go with AI-assisted advice.
+- Troubleshoot crashed Kubernetes pods with real-time AI-assisted log diagnostics suggestions.
+- Keep simulated cloud spending optimized with automated FinOps recommendations.
+- Draft Terraform configurations directly from their phone.
 
 ---
 
@@ -90,14 +99,14 @@ Here is a conceptual breakdown of a typical interactive session with the assista
 
 ## 🚀 Key Features (The 6 Pillars)
 
-DevOpsHub AI aggregates the daily tasks of modern SREs and DevOps Engineers into interactive modules:
+DevOpsHub AI aggregates the daily tasks of modern SREs and DevOps Engineers into interactive, high-fidelity modules:
 
-1. **CI/CD Pipeline Monitor** — View pipeline runs, trigger simulated builds, and get automated, highly accurate root-cause analysis on failed builds.
-2. **IaC Terraform Generator** — Describe infrastructure in plain English and instantly generate production-ready, syntax-correct, and secure Terraform configurations.
-3. **Container & K8s Controller** — Inspect pod lists, check runtime status, fetch log streams, and use Gemini to diagnose and troubleshoot crashes like `CrashLoopBackOff`.
-4. **FinOps Cost Optimizer** — View cloud resources, analyze multi-cloud cost matrices, and execute automated cleanup strategies (such as purging orphaned EBS volumes) to save budget.
-5. **Observability & Alerts** — Review active system alerts and incidents with AI-driven triage and suggested manual or automated hotfixes.
-6. **DevSecOps Code Scanner** — Paste raw code snippets to scan for vulnerabilities (e.g., hardcoded credentials, injection risks) and generate secure compliance remediations.
+1. **CI/CD Pipeline Monitor** — View pipeline runs, trigger simulated builds, and get automated, AI-assisted root-cause analysis suggestions on failed builds.
+2. **IaC Terraform Generator** — Describe infrastructure in plain English and instantly generate Terraform configuration suggestions.
+3. **Container & K8s Controller** — Inspect simulated pod lists, check runtime status, fetch simulated log streams, and get AI-assisted diagnostic recommendations for troubleshooting crashes like `CrashLoopBackOff`.
+4. **FinOps Cost Optimizer** — View simulated cloud resources, analyze mock cost matrices, and explore simulated cleanup recommendations (such as purging orphaned EBS volumes) to save budget.
+5. **Observability & Alerts** — Review simulated system alerts and incidents with AI-driven triage suggestions and manual hotfix recommendations.
+6. **DevSecOps Code Scanner** — Paste raw code snippets to analyze for vulnerabilities (e.g., hardcoded credentials, injection risks) and generate recommended security remediations.
 
 ---
 
