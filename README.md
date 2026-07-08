@@ -4,15 +4,12 @@
 
 # DevOpsHub AI
 
-[![Build Status](https://img.shields.io/badge/Build-Succeeded-brightgreen.svg)](#)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0.0-blue.svg)](https://kotlinlang.org)
 [![Compose](https://img.shields.io/badge/Compose-M3-purple.svg)](https://developer.android.com/jetpack/compose)
 [![API Level](https://img.shields.io/badge/Min%20SDK-24-orange.svg)](https://developer.android.com/studio/releases/platforms)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 An Android DevOps assistant built with **Jetpack Compose (Material 3)**, powered by the **Gemini API**. DevOpsHub AI brings six core "pillars" of cloud infrastructure, security, and operations into a single cohesive mobile dashboard.
-
-This application is designed with **MVVM architecture**, using native Material 3 styling, Edge-to-Edge capabilities, local mock database state machines, and direct integration with Gemini REST services for intelligent root-cause analysis, IaC generation, cluster troubleshooting, and security remediation.
 
 ---
 
@@ -21,7 +18,7 @@ This application is designed with **MVVM architecture**, using native Material 3
 DevOpsHub AI aggregates the daily tasks of modern SREs and DevOps Engineers into interactive modules:
 
 1. **CI/CD Pipeline Monitor** — View pipeline runs, trigger simulated builds, and get automated, highly accurate root-cause analysis on failed builds.
-2. **IaC Terraform Generator** — Describe infrastructure in plain English and instantly generate production-ready, syntax-correct, and secure Terraform configurations.
+2. **IaC Terraform Generator** — Describe infrastructure in plain English and instantly generate production-grade, syntax-correct, and secure Terraform configurations.
 3. **Container & K8s Controller** — Inspect pod lists, check runtime status, fetch log streams, and use Gemini to diagnose and troubleshoot crashes like `CrashLoopBackOff`.
 4. **FinOps Cost Optimizer** — View cloud resources, analyze multi-cloud cost matrices, and execute automated cleanup strategies (such as purging orphaned EBS volumes) to save budget.
 5. **Observability & Alerts** — Review active system alerts and incidents with AI-driven triage and suggested manual or automated hotfixes.
@@ -29,9 +26,9 @@ DevOpsHub AI aggregates the daily tasks of modern SREs and DevOps Engineers into
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## 🛠️ Tech Stack & Real Architecture
 
-DevOpsHub AI is built with modern Android guidelines, ensuring speed, stability, and ease of maintainability.
+To keep developers informed of the exact engineering setup of this prototype, here is the honest layout of our tech stack:
 
 ```
        ┌────────────────────────────────────────────────────────┐
@@ -41,32 +38,31 @@ DevOpsHub AI is built with modern Android guidelines, ensuring speed, stability,
                                    │
                                    ▼
        ┌────────────────────────────────────────────────────────┐
-       │                State Management & VM                   │
-       │    (Kotlin Flow, StateFlow, Coroutines, State Share)    │
+       │             Unidirectional State Flows                 │
+       │    (Compose State management using local state,       │
+       │     remember { mutableStateOf(...) }, and lambdas)     │
        └───────────────────────────┬────────────────────────────┘
                                    │
                      ┌─────────────┴─────────────┐
                      ▼                           ▼
        ┌───────────────────────────┐   ┌───────────────────────────┐
        │       Gemini Service      │   │     Local Cache / Data    │
-       │  (REST API Client, OkHttp)│   │  (DevOpsData Data Store)  │
+       │(Native OkHttpClient & JSON)│   │  (DevOpsData Repositories)│
        └─────────────┬─────────────┘   └───────────────────────────┘
                      │
                      ▼
        ┌───────────────────────────┐
        │     Google Gemini API     │
-       │    (gemini-1.5-flash)     │
+       │    (gemini-3.5-flash)     │
        └───────────────────────────┘
 ```
 
-- **Language**: Kotlin (100% Type-safe)
-- **UI Framework**: Jetpack Compose (Material 3, Dynamic Colors, Edge-to-Edge via `enableEdgeToEdge()`)
-- **Concurrecy**: Kotlin Coroutines & Flow (structured concurrency for network and file tasks)
-- **Networking**: Retrofit / OkHttp (making direct, authenticated REST API queries to Google's Gemini endpoint)
-- **Data Model**: Clean local repositories and models representing real Cloud configurations, Kubernetes Pods, system alerts, and pipeline runs.
-- **Testing Suite**: 
-  - **Robolectric**: Local JVM unit and integration testing without requiring a running emulator.
-  - **Roborazzi**: Screenshot regression tests for validating the UI design consistently.
+- **Architecture Pattern**: Native single-activity structure coordinating views using Compose-based State Management (`remember { mutableStateOf() }` with state-hoisting callback lambdas). It does *not* utilize a separate `ViewModel` class or standard navigation libraries, choosing direct Compose flow controls instead for high-performance navigation and tab-switches.
+- **Networking & API**: Powered by a lightweight native REST Client built directly around **OkHttp (`OkHttpClient`)** and manual `org.json` processing. This avoids any high-overhead abstraction libraries like Retrofit for basic AI endpoints.
+- **AI Model**: Native queries are routed to the cutting-edge **`gemini-3.5-flash`** model optimized for high-speed DevOps query compilation.
+- **Aesthetics & Theme**: Built on a dark, cybersecurity-focused visual theme using Material 3 containers. The system explicitly disables Dynamic System Theme Colors (`dynamicColor = false` in `Theme.kt`) to lock in and preserve the distinctive branding accents (Cyber Cyan, Neon Orange, Neon Green, Neon Purple, and Hot Coral).
+- **Typography & Layout**: Standard body components leverage default system sans-serif curves, while code snippet text blocks and terminal emulation boxes use Compose's native `FontFamily.Monospace` font definitions to provide optimal code readability.
+- **Testing Suite**: Includes local JVM test targets powered by **Robolectric** and screenshot-assertion tests using **Roborazzi**.
 
 ---
 
@@ -94,12 +90,12 @@ app/src/main/java/com/example/
 ├── data/
 │   └── DevOpsData.kt        # Local mock database, schemas, and custom specialized System Prompts
 ├── service/
-│   └── GeminiService.kt  # Rest API client for Google Gemini
+│   └── GeminiService.kt     # Lightweight REST API client for Google Gemini (gemini-3.5-flash)
 ├── ui/
 │   ├── theme/
-│   │   ├── Color.kt         # Custom high-contrast brand colors (Neon Orange, Cyber Cyan, Hot Coral)
-│   │   ├── Theme.kt         # Centralized Material 3 Design System setup
-│   │   └── Type.kt          # Space Grotesk and JetBrains Mono typography declarations
+│   │   ├── Color.kt         # Custom brand colors (Neon Orange, Cyber Cyan, Hot Coral, Neon Green)
+│   │   ├── Theme.kt         # Centralized Material 3 Design System (enforces branding over Dynamic Colors)
+│   │   └── Type.kt          # Default Material 3 typography fallback properties
 │   ├── DevOpsDashboard.kt   # Parent screen representing the main hub grid & statistics
 │   ├── PillarScreens.kt     # Detail UI and action handlers for the 6 core pillars
 │   └── BlueprintScreen.kt   # System Architecture blueprint viewer built directly into the app
