@@ -7,9 +7,9 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0.0-blue.svg)](https://kotlinlang.org)
 [![Compose](https://img.shields.io/badge/Compose-M3-purple.svg)](https://developer.android.com/jetpack/compose)
 [![API Level](https://img.shields.io/badge/Min%20SDK-24-orange.svg)](https://developer.android.com/studio/releases/platforms)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](#license)
-[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)](#)
-[![Tests Status](https://img.shields.io/badge/Tests-Passing-brightgreen.svg)](#)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](#-license)
+[![Build Status](https://github.com/yourusername/devopshub-ai-android/actions/workflows/build.yml/badge.svg)](https://github.com/yourusername/devopshub-ai-android/actions)
+[![Tests Status](https://img.shields.io/badge/Tests-Passing-brightgreen.svg)](#-testing-suite)
 
 An Android DevOps assistant built with **Jetpack Compose (Material 3)**, powered by the **Gemini API**. DevOpsHub AI brings six core "pillars" of cloud infrastructure, security, and operations into a single cohesive mobile dashboard.
 
@@ -26,6 +26,15 @@ Modern SREs and DevOps engineers constantly juggle multiple disconnected systems
 - Troubleshoot crashed Kubernetes pods with real-time AI log diagnostics.
 - Keep cloud spending optimized with automated FinOps suggestions.
 - Write robust Terraform configurations directly from their phone.
+
+---
+
+## 📥 Download
+
+You can obtain the application package via either of these options:
+- **GitHub Releases**: Download the latest pre-compiled debug/release APK from the **[Releases](https://github.com/yourusername/devopshub-ai/releases)** section of this repository.
+- **AI Studio Preview**: Test and stream the applet directly inside the Google AI Studio emulator browser dashboard.
+- **Local Compiling**: Build the APK directly from source in under 2 minutes (see the [Build Instructions](#-build--run-locally) below).
 
 ---
 
@@ -156,13 +165,21 @@ app/src/main/java/com/example/
 4. Select the **debug** variant in the **Build Variants** panel.
 5. Run on a connected emulator or physical device.
 
----
+### Building Release APK
 
-## 📦 Download & Release
+The `release` build type is configured to sign with a real upload keystore, which is **not included in this repository**. Because the signing configuration fetches parameters directly from the environment, you must provide your own keystore credentials via environment variables before running the build:
 
-You can download compiled artifacts for quick demonstration:
-- **Latest Dev APK**: Available via the AI Studio preview menu.
-- **Production-ready builds**: Can be signed and exported directly using the Android Studio `Build > Build Bundle(s) / APK(s) > Build APK(s)` tool.
+```bash
+# Set your production signing parameters
+export KEYSTORE_PATH="/path/to/your-upload-key.jks"
+export STORE_PASSWORD="your-keystore-password"
+export KEY_PASSWORD="your-key-password"
+
+# Build the release bundle or APK
+./gradlew assembleRelease
+```
+
+If `KEYSTORE_PATH` is left unset, Gradle defaults to searching for `my-upload-key.jks` in the project root.
 
 ---
 
@@ -194,29 +211,35 @@ If you made intentional UI adjustments and want to update the official baselines
 
 ---
 
-## 📈 Release Status & Versions
+## 📜 Changelog
 
-| Version | Release Date | Status | Description |
-| :---: | :---: | :---: | :--- |
-| **v1.0.0** | July 2026 | `In-Development` | Prototype preview showing 6 interactive DevOps pillars integrated with Gemini AI. |
+### v1.0 (July 2026)
+- **Initial Prototype Release**: Core framework launched with 6 fully functional DevOps pillars.
+- **Aesthetic Overhaul**: Customized cyberpunk cybersecurity color accents (enforcing dark slate grids over system Dynamic Colors).
+- **Gemini-3.5-Flash REST Client**: Replaced high-overhead SDK structures with lean, direct REST serialization based on standard OkHttpClient and JSON streams.
+- **Local Mock State Machines**: Created localized simulations for CI/CD pipeline runs, Kubernetes cluster containers, and cloud assets.
+- **Local Visual Assertions**: Integrated local Robolectric suite and Roborazzi screenshot verification patterns.
 
 ---
 
 ## ⚠ Known Limitations
 
-- **Simulated Infrastructure Data**: Cloud servers, Kubernetes clusters, and pipelines are modeled as realistic local state machines inside `DevOpsData.kt` rather than live production instances.
-- **No Direct Cloud Writes**: Generated Terraform code and DevSecOps recommendations must be manually verified and executed, protecting your live environment from accidental mutations.
-- **Client Key Storage Warning**: The Gemini API key is loaded locally from `.env` and bundled into the debug binary, making it insecure for public play store distribution without an intermediate proxy backend.
+- **Simulated Infrastructure Data**: Cloud servers, Kubernetes clusters, and pipelines are modeled as realistic local state machines inside `DevOpsData.kt` rather than live production cloud instances.
+- **No Direct Cloud Writes**: Generated Terraform configurations and security remediations must be reviewed and executed manually—the app will never mutate or write to your cloud environments directly.
+- **Client Key Storage Warning**: The Gemini API key is loaded from `.env` and bundled into the compiled binary (both debug and release variants) via the Secrets Gradle Plugin, making it insecure for public Google Play Store distribution without an intermediate secure backend proxy.
 
 ---
 
-## 💬 FAQ
+## ❓ FAQ
 
-### Does this app connect to my live AWS/GCP/Kubernetes?
-**No**. All network activities are simulated using secure local state controllers. Only the diagnostic and generator fields send prompts to the secure Google Gemini API.
+### Does this app connect to my live AWS, GCP, or local Kubernetes clusters?
+**No**. All infrastructure and network parameters are fully simulated using interactive local state controllers. Only the generator and diagnosis text fields perform standard outbound REST queries to the Google Gemini API.
 
-### Is a Gemini API key strictly required?
-**Yes**, to use the AI capabilities (Terraform generator, CI/CD analysis, K8s troubleshooting, DevSecOps code scanner). However, the dashboard, charts, metric controls, and simulation flows remain fully functional offline even without a key.
+### Is a Gemini API key strictly required to run the application?
+**Yes**, to use any of the AI capabilities (Terraform generator, CI/CD diagnosis, Kubernetes troubleshooting, DevSecOps vulnerability scanner). However, the central dashboards, metrics, mock controls, simulation flows, and system blueprints remain fully responsive offline without any key.
+
+### Does it work offline?
+All system dashboards, charts, simulations, and blueprint tabs function perfectly offline. Only the four AI-driven text prompt fields require an active internet connection to execute Gemini reasoning.
 
 ---
 
@@ -231,14 +254,15 @@ Contributions to improve DevOpsHub AI are highly welcome!
 
 ---
 
-## 🎖️ Acknowledgements
+## 🙏 Acknowledgements
 
-- **Google Gemini API**: Providing robust language model reasoning directly to mobile devices.
+- **Google Gemini API**: Providing robust language model reasoning directly to mobile devices using `gemini-3.5-flash`.
 - **Android Jetpack Compose & M3**: For the highly customizable, edge-to-edge component framework.
+- **OkHttp (Square)**: For high-performance, direct, and lightweight HTTP client operations.
 - **Robolectric & Roborazzi**: Ensuring solid, automated visual regression coverage.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is released under the **MIT License**. See the [LICENSE](LICENSE) file for more information.
